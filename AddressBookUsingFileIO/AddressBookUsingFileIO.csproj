@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="CsvData.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Example.txt" />
