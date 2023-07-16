@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -98,6 +99,41 @@ namespace AddressBookUsingFileIO
             catch (Exception ex)
             {
                 Console.WriteLine("Error exporting to CSV file: {0}", ex.Message);
+            }
+        }
+        public void WriteToJsonFile(string filePath)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(ContactInfo, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(filePath, json);
+
+                Console.WriteLine("Address book written to file successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error writing to file: {0}", ex.Message);
+            }
+        }
+        public void ReadFromJsonFile(string filePath)
+        {
+            try
+            {
+                string json = File.ReadAllText(filePath);
+                ContactInfo = JsonConvert.DeserializeObject<List<Contacts>>(json);
+                foreach(Contacts contact in ContactInfo)
+                {
+                    Console.WriteLine("First Name : "+contact.firstName);
+                    Console.WriteLine("Last Name : "+contact.lastName);
+                    Console.WriteLine("Country  : "+contact.country);
+                    Console.WriteLine("PhoneNumber : "+contact.phoneNumber);
+                    Console.WriteLine("Email : "+contact.email);
+                    Console.WriteLine("\n.................................\n");
+                }               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading from file: {0}", ex.Message);
             }
         }
     }
